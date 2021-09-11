@@ -59,11 +59,11 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(250), nullable=False)
     email = db.Column(db.String(250), nullable=False, unique=True)
     password = db.Column(db.String(250), nullable=False)
-    blog_posts = relationship('BlogPost', back_populates='author')
+    blog_posts = relationship('BlogPosts', back_populates='author')
     comments = relationship('Comment', back_populates='author')
 
 
-class BlogPost(db.Model):
+class BlogPosts(db.Model):
     __tablename__ = "blog_posts"
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(250), unique=True, nullable=False)
@@ -83,7 +83,7 @@ class Comment(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     author = relationship('User', back_populates='comments')
     post_id = db.Column(db.Integer, db.ForeignKey('blog_posts.id'))
-    parent_post = relationship('BlogPost', back_populates='comments')
+    parent_post = relationship('BlogPosts', back_populates='comments')
 
 
 # db.create_all()
